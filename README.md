@@ -26,6 +26,12 @@ An environment and tools that Claude can use to control a desktop computer. This
 
 [Go to Computer Use Demo Quickstart](./computer-use-demo)
 
+### Online Reservation System
+
+A comprehensive property reservation platform with JSON-backed storage, HTTP API, CLI tooling and reporting utilities. It showcases how to structure a domain heavy application without external dependencies.
+
+[Go to Online Reservation System](./reservation_system)
+
 ## General Usage
 
 Each quickstart project comes with its own README and setup instructions. Generally, you'll follow these steps:

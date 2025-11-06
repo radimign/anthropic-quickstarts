@@ -2,3 +2,8 @@
 venvPath = "computer-use-demo"
 venv = ".venv"
 useLibraryCodeForTypes = false
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
