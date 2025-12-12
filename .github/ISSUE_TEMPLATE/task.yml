@@ -1,0 +1,46 @@
+name: Task
+about: Track a specific piece of work
+labels: []
+title: "[Task] "
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why this task is needed and any background info.
+    validations:
+      required: true
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      description: Bullet list of concrete steps to complete.
+      placeholder: |
+        - [ ] first step
+        - [ ] second step
+    validations:
+      required: true
+  - type: textarea
+    id: dod
+    attributes:
+      label: Definition of Done
+      description: Clear, verifiable acceptance criteria.
+    validations:
+      required: true
+  - type: input
+    id: labels
+    attributes:
+      label: Suggested Labels
+      description: Optional labels to apply (comma separated).
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - high
+        - medium
+        - low
+    validations:
+      required: true

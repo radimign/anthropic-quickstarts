@@ -1,0 +1,40 @@
+name: Feature Request
+about: Propose a new capability or improvement
+labels: []
+title: "[Feature] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem are you trying to solve? Why does it matter?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Describe the feature, including API/UX, data flows, and examples.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Other approaches you evaluated and why they are less suitable.
+    validations:
+      required: false
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Expected Impact / Benefits
+      description: How this feature helps users or maintainers.
+    validations:
+      required: true
+  - type: textarea
+    id: rollout
+    attributes:
+      label: Rollout / Risks
+      description: Potential risks, open questions, or rollout steps.
+    validations:
+      required: false
