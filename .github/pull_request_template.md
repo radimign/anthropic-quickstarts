@@ -1,27 +1,16 @@
-## Description
-<!-- Describe the changes you've made -->
-
-## Quickstart
-- [ ] Computer Use Demo
-- [ ] Customer Support Agent
-- [ ] Financial Data Analyst
-- [ ] N/A
-
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Documentation update
-- [ ] Code refactoring
-- [ ] Other (please describe):
+## Summary
+- What changed and why? Include user-facing impacts.
 
 ## Testing
-<!-- Describe the testing you've done -->
-- [ ] Added/updated unit tests
-- [ ] Tested manually
-- [ ] Verified in development environment
+- Commands run and results.
 
-## Screenshots
-<!-- If applicable, add screenshots to help explain your changes -->
+## Checklist
+- [ ] Lint checks
+- [ ] Tests (unit/integration as applicable)
+- [ ] Documentation updates (README/CHANGELOG/docs) if needed
 
-## Additional Notes
-<!-- Add any additional context or notes about the changes -->
+## How to Test
+- Step-by-step instructions for reviewers to validate the change locally.
+
+## Risks & Rollback
+- Potential risks, mitigations, and how to roll back if needed.
