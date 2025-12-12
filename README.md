@@ -6,6 +6,45 @@ Anthropic Quickstarts is a collection of projects designed to help developers qu
 
 To use these quickstarts, you'll need an Anthropic API key. If you don't have one yet, you can sign up for free at [console.anthropic.com](https://console.anthropic.com).
 
+## Quickstart
+
+1. **Install dependencies**
+   - Create a virtual environment and install the Python libraries used across the examples:
+     ```bash
+     python -m venv .venv
+     source .venv/bin/activate
+     pip install anthropic mcp
+     ```
+2. **Configure environment variables**
+   - Copy the template and add your API key (and update the model if desired):
+     ```bash
+     cp .env.example .env
+     echo "ANTHROPIC_API_KEY=your_api_key_here" >> .env
+     echo "ANTHROPIC_MODEL=claude-3-7-sonnet-20250219" >> .env
+     ```
+   - Load the values into your shell: `export $(cat .env | xargs)`
+3. **Run a sample interaction**
+   - Ask Claude a quick question using the minimal agent implementation:
+     ```bash
+     python - <<'PY'
+     from agents.agent import Agent
+     from agents.tools.think import ThinkTool
+
+     agent = Agent(
+         name="Quickstart",
+         system="You are a concise assistant.",
+         tools=[ThinkTool()],
+     )
+
+     print(agent.run("Say hello in one sentence."))
+     PY
+     ```
+4. **Expected output**
+   - A one-sentence greeting from Claude printed to the console (e.g., `"Hello! I'm ready to help."`).
+5. **Troubleshooting**
+   - **Missing API key**: Ensure `ANTHROPIC_API_KEY` is present in `.env` and exported into your shell.
+   - **Unsupported model**: If you see model errors, switch `ANTHROPIC_MODEL` to a currently available option such as `claude-3-5-sonnet-20241022`.
+
 ## Available Quickstarts
 
 ### Customer Support Agent
@@ -35,6 +74,13 @@ Each quickstart project comes with its own README and setup instructions. Genera
 3. Install the required dependencies
 4. Set up your Anthropic API key as an environment variable
 5. Run the quickstart application
+
+## Project structure
+
+- `agents/` – minimal educational agent implementation (Python)
+- `customer-support-agent/` – Claude-powered customer support Next.js app
+- `financial-data-analyst/` – chat-based financial data exploration Next.js app
+- `computer-use-demo/` – desktop computer control demo
 
 ## Explore Further
 
