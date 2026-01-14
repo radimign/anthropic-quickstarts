@@ -28,6 +28,17 @@ async def test_computer_tool_mouse_move(computer_tool):
 
 
 @pytest.mark.asyncio
+async def test_computer_tool_mouse_move_tuple(computer_tool):
+    with patch.object(computer_tool, "shell", new_callable=AsyncMock) as mock_shell:
+        mock_shell.return_value = ToolResult(output="Mouse moved")
+        result = await computer_tool(action="mouse_move", coordinate=(100, 200))
+        mock_shell.assert_called_once_with(
+            f"{computer_tool.xdotool} mousemove --sync 100 200"
+        )
+        assert result.output == "Mouse moved"
+
+
+@pytest.mark.asyncio
 async def test_computer_tool_type(computer_tool):
     with (
         patch.object(computer_tool, "shell", new_callable=AsyncMock) as mock_shell,

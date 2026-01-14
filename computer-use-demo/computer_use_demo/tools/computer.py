@@ -211,8 +211,10 @@ class BaseComputerTool:
 
         raise ToolError(f"Invalid action: {action}")
 
-    def validate_and_get_coordinates(self, coordinate: tuple[int, int] | None = None):
-        if not isinstance(coordinate, list) or len(coordinate) != 2:
+    def validate_and_get_coordinates(
+        self, coordinate: tuple[int, int] | list[int] | None = None
+    ):
+        if not isinstance(coordinate, (list, tuple)) or len(coordinate) != 2:
             raise ToolError(f"{coordinate} must be a tuple of length 2")
         if not all(isinstance(i, int) and i >= 0 for i in coordinate):
             raise ToolError(f"{coordinate} must be a tuple of non-negative ints")
