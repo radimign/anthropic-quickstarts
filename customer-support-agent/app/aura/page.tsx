@@ -1,18 +1,156 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   Calendar,
   CheckCircle2,
   ChevronRight,
   MapPin,
+  MessageCircle,
+  Send,
   Sparkles,
   TrendingUp,
   User,
   Video,
   X,
 } from "lucide-react";
+
+
+type ChatMessage = {
+  sender: "bot" | "user";
+  text: string;
+};
+
+type FunnelKeyword = "START" | "RODINA" | "CESTA";
+
+const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
+  {
+    sender: "bot",
+    text: "Ahoj! 👋 Tady Radim. Pokud tě zaujalo nějaké moje video, napiš mi heslo (START, RODINA, CESTA) nebo se prostě zeptej na to, co tvé vlasy právě teď potřebují. ☕",
+  },
+];
+
+function InstagramChatbot() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_CHAT_MESSAGES);
+  const [inputValue, setInputValue] = useState("");
+  const [activeFunnel, setActiveFunnel] = useState<FunnelKeyword | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleBotResponse = (userText: string) => {
+    const text = userText.toUpperCase().trim();
+
+    window.setTimeout(() => {
+      let botReply = "";
+
+      if (activeFunnel === "RODINA") {
+        botReply =
+          "Super. První konzultace je u mě vždycky v klidu. Probereme historii tvých vlasů, co tě trápí, kolik času jim chceš věnovat a najdeme cestu. Zabere to chvilku a je to nezávazné. Můžeme si zavolat, nebo se rovnou potkat v salonu ve Znojmě. Co by ti vyhovovalo víc? ☕";
+        setActiveFunnel(null);
+      } else if (activeFunnel === "CESTA") {
+        botReply =
+          "Skvělé. První online konzultace zabere jen chvilku a je úplně nezávazná. Probereme na ní, co tě na vlasech aktuálně trápí a jaký střih ti ušetří čas před zrcadlem. Můžeme si na 10 minut zavolat, nebo tě rovnou rád uvidím u sebe v salonu ve Znojmě. Co ti vyhovuje víc? ☕";
+        setActiveFunnel(null);
+      } else if (activeFunnel === "START") {
+        botReply =
+          "Skvělé. Rád ti pošlu odkaz na jednoduchý formulář, kde mi na sebe necháš kontakt, a domluvíme si náš první hovor nebo setkání. 🤍";
+        setActiveFunnel(null);
+      } else if (text.includes("RODINA")) {
+        botReply =
+          "Ahoj! 👋 Moc děkuju, že jsi mi napsala. Vážím si toho. Můj přístup je hodně o tom, abychom našli to, co ti bude opravdu sedět a v čem se budeš cítit dobře. Žádné rychlé trendy, ale vlasy, které dávají smysl. 🤍 Chtěla bys vědět, jak u mě probíhá první konzultace, nebo už máš představu, co bys s vlasy chtěla udělat?";
+        setActiveFunnel("RODINA");
+      } else if (text.includes("CESTA")) {
+        botReply =
+          "Ahoj! 👋 Moc ti děkuju za zprávu k videu o kronice života. Vlasy toho s námi opravdu prožijí hodně. Můj přístup je o tom, abychom našli styl, který tě podrží v jakékoliv životní fázi – žádný stres, žádné složité ranní foukání. Vlasy, které dávají smysl. 🤍 Chceš se podívat, jak u mě funguje úvodní konzultace?";
+        setActiveFunnel("CESTA");
+      } else if (text.includes("START")) {
+        botReply =
+          "Ahoj! 👋 Skvělé rozhodnutí. Jsem rád, že chceš dát svým vlasům tu správnou péči a prostor. Pojďme na to v klidu a od začátku. Chceš rovnou přejít k první online konzultaci?";
+        setActiveFunnel("START");
+      } else {
+        botReply =
+          "Díky za zprávu! 🤍 Co nejdříve si ji přečtu a osobně ti odpovím. Pokud si chceš rovnou zarezervovat konzultaci, mrkni do sekce Rezervace.";
+      }
+
+      setMessages((prev) => [...prev, { sender: "bot", text: botReply }]);
+    }, 1000);
+  };
+
+  const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!inputValue.trim()) return;
+
+    setMessages((prev) => [...prev, { sender: "user", text: inputValue }]);
+    setInputValue("");
+    handleBotResponse(inputValue);
+  };
+
+  return (
+    <div className="fixed bottom-24 right-6 z-50 font-sans sm:bottom-6">
+      {isOpen && (
+        <div className="mb-4 flex w-80 flex-col overflow-hidden rounded-lg border border-stone-200 bg-white shadow-xl transition-all duration-300 sm:w-96">
+          <div className="flex items-center justify-between bg-stone-900 p-4 text-stone-50">
+            <div>
+              <h3 className="font-medium">Radím s vlasy</h3>
+              <p className="text-xs font-light text-stone-400">Online konzultace a dotazy</p>
+            </div>
+            <button onClick={() => setIsOpen(false)} className="text-stone-400 transition-colors hover:text-white" aria-label="Zavřít chat">
+              <X size={20} />
+            </button>
+          </div>
+
+          <div className="flex h-80 flex-1 flex-col gap-3 overflow-y-auto bg-stone-50 p-4">
+            {messages.map((msg, index) => (
+              <div
+                key={`${msg.sender}-${index}`}
+                className={`max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed ${
+                  msg.sender === "user"
+                    ? "self-end rounded-br-sm bg-stone-200 text-stone-900"
+                    : "self-start rounded-bl-sm border border-stone-200 bg-white text-stone-700 shadow-sm"
+                }`}
+              >
+                {msg.text}
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+
+          <form onSubmit={handleSendMessage} className="flex gap-2 border-t border-stone-100 bg-white p-3">
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(event) => setInputValue(event.target.value)}
+              placeholder="Napiš zprávu..."
+              className="flex-1 rounded-full border-none bg-stone-100 px-4 py-2 text-sm text-stone-800 focus:outline-none focus:ring-1 focus:ring-stone-300"
+            />
+            <button
+              type="submit"
+              className="flex items-center justify-center rounded-full bg-stone-900 p-2 text-white transition-colors hover:bg-stone-800"
+              aria-label="Odeslat zprávu"
+            >
+              <Send size={16} />
+            </button>
+          </form>
+        </div>
+      )}
+
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="flex transform items-center justify-center rounded-full bg-stone-900 p-4 text-white shadow-lg transition-transform hover:scale-105 hover:bg-stone-800"
+          aria-label="Otevřít chat"
+        >
+          <MessageCircle size={28} />
+        </button>
+      )}
+    </div>
+  );
+}
 
 const CATEGORIES = [
   "Dámské střihy",
@@ -695,6 +833,7 @@ function AuraPage() {
       </div>
 
       <Navigation />
+      <InstagramChatbot />
     </div>
   );
 }
