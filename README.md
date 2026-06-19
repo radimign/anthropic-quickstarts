@@ -26,6 +26,12 @@ An environment and tools that Claude can use to control a desktop computer. This
 
 [Go to Computer Use Demo Quickstart](./computer-use-demo)
 
+### Simple CLI Chat
+
+A minimalist Czech-language command line chat client for Claude. This project shows how to spin up a conversational experience in just a few lines of Python.
+
+[Go to Simple CLI Chat Quickstart](./simple-cli-chat)
+
 ## General Usage
 
 Each quickstart project comes with its own README and setup instructions. Generally, you'll follow these steps:
